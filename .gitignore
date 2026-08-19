@@ -1,0 +1,51 @@
+# ─── Secrets & local env ──────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+.envrc
+*.pem
+*.key
+secrets/
+.secrets/
+
+# ─── Node / JS / TS ───────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vite/
+dist/
+build/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+.vercel/
+.tanstack/
+.output/
+.nitro/
+.data/
+.pglite/
+*.pglite
+
+# ─── Sandbox / local publish ──────────────────────────────────────────────
+.publish/
+artifacts/
+screenshots/*.png
+!docs/preview/*.png
+
+# ─── OS / editors ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json.example
+!.vscode/extensions.json
+.history/
+
+# ─── Logs / scratch ───────────────────────────────────────────────────────
+*.log
+logs/
+tmp/
+.tmp/
+.cache/

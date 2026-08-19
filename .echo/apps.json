@@ -1,0 +1,18 @@
+{
+  "repo": "echoomegaprime/echo-music-studio",
+  "connectors": [
+    {
+      "host": "grok",
+      "github_app": "grok-by-xai",
+      "url": "https://github.com/apps/grok-by-xai",
+      "install": "https://github.com/apps/grok-by-xai/installations/new"
+    },
+    {
+      "host": "chatgpt-codex",
+      "github_app": "chatgpt-codex-connector",
+      "url": "https://github.com/apps/chatgpt-codex-connector",
+      "install": "https://github.com/apps/chatgpt-codex-connector/installations/new"
+    }
+  ],
+  "skills": "https://github.com/echoomegaprime/echo-ai-skills"
+}
