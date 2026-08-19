@@ -1,48 +1,20 @@
-# Echo Suno Studio — connector
+# Echo Suno Studio — API connector
 
-Grok, GPT, Claude, and Qwen all talk to the same studio. The chat client is interchangeable. Suno and ElevenLabs stay behind the vault.
+Public plugin. Official Suno **Platform API** (or a documented REST provider). Grok, GPT, Claude, and Qwen are interchangeable clients.
 
-## What this is
+Personal web-account operator (Clerk session cookie) lives in the **private** repo `echo-suno-operator`. Do not put cookies in this public repo.
 
-A governed music studio:
-
-- Song architect (Grok / GPT / Claude / Qwen)
-- Generate, cover, extend, mashup, stems, add vocals, WAV, video, persona, boost style
-- Instant voice clone (ElevenLabs) injected into Suno vocal stems
-- Per-user AES vault — the Suno credential never enters the model context
-
-## ChatGPT (GPT)
-
-Remote MCP + ChatGPT App UI.
-
-- Resource: `/oauth-mcp-suno-v1`
-- OAuth to Echo, not to Suno
-- Tools: architect, generate, cover, extend, mashup, stems, inject_voice, jobs, library
-- Confirmation token `EXECUTE` required for paid actions
-
-Point ChatGPT custom GPT / Apps at the deployed MCP endpoint after OAuth.
-
-## Grok
-
-Same MCP pack. In Grok, add the remote connector to Echo Suno Studio. Grok can also run as the in-app architect when `XAI_API_KEY` is set.
-
-## Claude
-
-Use the same MCP server as a Claude custom connector / desktop MCP. Claude can also be the in-app architect when `ANTHROPIC_API_KEY` is set.
-
-## Qwen
-
-Same MCP. In-app architect when `QWEN_API_KEY` or `DASHSCOPE_API_KEY` is set.
-
-## Auth path
+## Path
 
 ```
 You → Grok / GPT / Claude / Qwen
         → Echo OAuth
-        → Vault (your Suno key, your ElevenLabs key)
-        → Suno Platform / ElevenLabs
+        → Vault (your Suno API key, your ElevenLabs key)
+        → Suno Platform API
 ```
 
-Never paste a Suno password into a chat.
+Resource: `/oauth-mcp-suno-v1`
 
-Official Suno API access is requested at [platform.suno.com](https://platform.suno.com/) and [sunomusic.typeform.com/apiform](https://sunomusic.typeform.com/apiform).
+Paid actions require `EXECUTE`. Never paste a Suno password into chat.
+
+Official access: [platform.suno.com](https://platform.suno.com/) · [intake form](https://sunomusic.typeform.com/apiform)

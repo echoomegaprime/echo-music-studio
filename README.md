@@ -1,33 +1,31 @@
-# Echo Suno Studio
+# Echo Suno Studio — API plugin
 
-Compose with **Grok, GPT, Claude, or Qwen**. Render through your Suno account. Clone a voice with ElevenLabs and inject it into a Suno vocal stem.
+**Public API version.** Compose with **Grok, GPT, Claude, or Qwen**. Generate through the **Suno Platform API** (Bearer key in a server-side vault). Clone a voice with ElevenLabs and inject it into a Suno vocal stem.
 
 Repo: [echoomegaprime/echo-music-studio](https://github.com/echoomegaprime/echo-music-studio)
 
-Credentials stay server-side. No scrape. No pooled Suno key.
+This repo does **not** scrape suno.com and does **not** store consumer-site cookies. Each user pastes **their own** official (or documented REST) API credential. The key never enters the model context.
+
+Personal operator (your Suno web account, session cookie) is a **separate private repo**: `echo-suno-operator`.
 
 ## Architects
 
-Pick a writer in the control-room chat. The first live key wins if your pick is offline.
-
 | Model | Env |
 | --- | --- |
-| Grok | `XAI_API_KEY` (optional `XAI_MODEL`, default `grok-4.5`) |
-| GPT | `OPENAI_API_KEY` (optional `OPENAI_MODEL`, default `gpt-4.1`) |
-| Claude | `ANTHROPIC_API_KEY` (optional `ANTHROPIC_MODEL`) |
-| Qwen | `QWEN_API_KEY` or `DASHSCOPE_API_KEY` (optional `QWEN_BASE_URL`, `QWEN_MODEL`) |
+| Grok | `XAI_API_KEY` |
+| GPT | `OPENAI_API_KEY` |
+| Claude | `ANTHROPIC_API_KEY` |
+| Qwen | `QWEN_API_KEY` or `DASHSCOPE_API_KEY` |
 
-Suno Platform key and ElevenLabs key go in **Vault** after sign-in. They never return to the browser.
+Suno Platform key + ElevenLabs key → **Vault** after sign-in.
 
-## Connector (Grok / GPT / Claude / Qwen)
+## Connector
 
-See [CONNECTOR.md](./CONNECTOR.md).
+See [CONNECTOR.md](./CONNECTOR.md) and [docs/CONNECTORS.md](./docs/CONNECTORS.md).
 
 ## Run
 
 ```bash
 npm install
-npm run dev
+npm run dev   # 0.0.0.0:8080
 ```
-
-Preview binds `0.0.0.0:8080`.
