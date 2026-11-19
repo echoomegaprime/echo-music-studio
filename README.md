@@ -29,3 +29,7 @@ See [CONNECTOR.md](./CONNECTOR.md) and [docs/CONNECTORS.md](./docs/CONNECTORS.md
 npm install
 npm run dev   # 0.0.0.0:8080
 ```
+
+## Read-only media preflight
+
+Run `npm run media:preflight` in the operator environment. It reads its configured Suno Platform and ElevenLabs API keys and the selected `ECHO_NARRATION_VOICE_ID`. It checks the Studio Platform credit balance, ElevenLabs included character quota and visibility of the selected voice. The output contains status labels and numeric balances. Exit code 0 means all three reads succeeded with positive balances and the voice was listed. The result does not verify generation scope, a particular job's price, paid overage, or consumer suno.com session access. A custom Suno base URL reports `custom_provider_unverified`. Run `node --test scripts/media-preflight.test.mjs` for the offline fixtures.
