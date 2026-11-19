@@ -1,3 +1,4 @@
+import { creditResult } from "./credit-result.mjs";
 import type { Capabilities, GenerateControls, SongSpec } from "./types";
 import { renderSketch, coverSvg } from "./sketch.server";
 
@@ -158,38 +159,23 @@ export async function probeSuno(
 ): Promise<{ ok: boolean; credits: number | null; error: string | null; capabilities: Capabilities }> {
   const root = baseUrl.replace(/\/$/, "");
   try {
-    const first = await sunoJson(root, apiKey, "/api/v1/generate/credit");
-    const fallback = first.ok ? first : await sunoJson(root, apiKey, "/api/v1/generate/credit");
-    const used = first.ok ? first : fallback;
-    if (!used.ok) {
-      return {
-        ok: false,
-        credits: null,
-        error: failMsg(used.json, used.status, "Provider"),
-        capabilities: defaultCapabilities(false),
-      };
+    const response = await sunoJson(root, apiKey, "/api/v1/generate/credit", {
+      method: "GET",
+      redirect: "error",
+      signal: AbortSignal.timeout(8000),
+    });
+    const result = creditResult(response.json);
+    if (response.ok && "credits" in result) {
+      return { ok: true, credits: result.credits, error: null, capabilities: defaultCapabilities(true) };
     }
-    let credits: number | null = null;
-    const data = used.json.data;
-    if (typeof data === "number") credits = data;
-    else if (data && typeof data === "object") {
-      const rec = data as Record<string, unknown>;
-      if (typeof rec.credits === "number") credits = rec.credits;
-      else if (typeof rec.credit === "number") credits = rec.credit;
-    }
-    return {
-      ok: true,
-      credits,
-      error: null,
-      capabilities: defaultCapabilities(true),
-    };
-  } catch (err) {
     return {
       ok: false,
       credits: null,
-      error: err instanceof Error ? err.message : "Provider unreachable",
+      error: response.ok ? result.state : `Provider rejected the balance read (${response.status})`,
       capabilities: defaultCapabilities(false),
     };
+  } catch {
+    return { ok: false, credits: null, error: "Provider balance read failed", capabilities: defaultCapabilities(false) };
   }
 }
 
